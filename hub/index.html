@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ハブ｜声×場所 AI 体験</title>
+<meta name="theme-color" content="#0e1a3a" />
+<style>
+  :root{
+    --bg:#0e1a3a; --ink:#f7f8fb; --muted:#bdc6d9;
+    --card:#111b3f; --btn:#1d2a64; --btn2:#2642a4; --btn3:#3b82f6;
+    --accent:#6a48ff; --ok:#10b981; --warn:#f59e0b;
+    --radius:16px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f6f7fb; --ink:#151823; --muted:#5e6a7e;
+      --card:#ffffff; --btn:#2b3a8f; --btn2:#3f5dd0; --btn3:#2563eb;
+      --accent:#6a48ff;
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; color:var(--ink); background:
+      radial-gradient(1200px 700px at 15% -10%, #6a48ff22, transparent 60%),
+      radial-gradient(900px 600px at 120% 10%, #3fb2ff22, transparent 55%),
+      var(--bg);
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,'Noto Sans JP',sans-serif;
+    line-height:1.6;
+  }
+  .wrap{max-width:960px; margin:0 auto; padding:24px 16px 48px}
+  header{display:flex; align-items:center; gap:12px; margin:8px 0 16px}
+  header img{width:40px; height:40px; object-fit:contain}
+  h1{font-size:clamp(20px,4vw,28px); margin:0}
+  p.lead{margin:.25rem 0 1rem; color:var(--muted)}
+  .grid{
+    display:grid; gap:12px;
+    grid-template-columns: 1fr;
+    margin:18px 0 12px;
+  }
+  @media (min-width:540px){ .grid{ grid-template-columns: 1fr 1fr 1fr; } }
+  a.btn{
+    display:flex; align-items:center; justify-content:center;
+    gap:.6rem; min-height:64px; padding:18px 14px;
+    background:var(--btn); border-radius:var(--radius);
+    color:#fff; text-decoration:none; font-weight:700; letter-spacing:.01em;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    transition: transform .06s ease, filter .2s ease, background .2s ease;
+    text-align:center;
+  }
+  a.btn:hover{ transform: translateY(-1px); filter:brightness(1.05); }
+  a.btn:active{ transform: translateY(0); }
+  .btn.hf{ background: var(--btn3); }
+  .btn.gh{ background: var(--btn2); }
+  .btn.docs{ background: var(--btn); }
+  .btn small{font-weight:600; opacity:.9}
+  .card{
+    background: var(--card); border-radius: var(--radius); padding:16px 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18); margin-top:14px;
+  }
+  .card h2{font-size:18px; margin:.2rem 0 .6rem}
+  .list{margin:0; padding-left:1.1rem}
+  .list li{margin:.2rem 0}
+  .note{font-size:.95rem; color:var(--muted)}
+  footer{margin-top:18px; font-size:.95rem; color:var(--muted)}
+  .badge{display:inline-block; padding:.16rem .5rem; border-radius:999px; font-size:.78rem; background:#ffffff22}
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <!-- 学校の校章があれば置き換え（任意） -->
+      <!-- <img src="assets/img/crest.svg" alt="校章"> -->
+      <div>
+        <h1>声×場所 AI 体験 ハブ</h1>
+        <p class="lead">ワンタップでデモ・会話劇・研究資料へ。※音声は保存しません／診断ではありません。</p>
+      </div>
+    </header>
+
+    <!-- でかボタン × 3 -->
+    <section class="grid" aria-label="リンクボタン">
+      <a class="btn hf" id="btn-hf" href="#" role="button" aria-label="デモを開く（Hugging Face）">
+        🎙️ デモ <small>（Hugging Face）</small>
+      </a>
+      <a class="btn gh" id="btn-gh" href="#" role="button" aria-label="会話劇を開く（GitHub Pages）">
+        📖 会話劇 <small>（GitHub Pages）</small>
+      </a>
+      <a class="btn docs" id="btn-docs" href="#" role="button" aria-label="研究資料を開く（スライド／ノート）">
+        📚 研究資料 <small>（スライド／ノート）</small>
+      </a>
+    </section>
+
+    <!-- 注意書き -->
+    <section class="card" aria-label="注意事項">
+      <h2>注意事項</h2>
+      <p class="note">この体験はAIが<strong>声のパターン</strong>から<strong>4つの気分の割合</strong>を推測して可視化するものです。<br>
+        医学的診断ではありません。音声は保存しません。</p>
+    </section>
+
+    <!-- 最新情報 -->
+    <section class="card" aria-label="最新情報">
+      <h2>最新情報 <span class="badge">Update</span></h2>
+      <ul class="list">
+        <!-- 任意：開催日程やリンクを更新 -->
+        <li>オープンキャンパス：<strong>2025/08/10</strong> 10:00–16:00</li>
+        <li>学科紹介PDF：<a id="link-pdf" href="#" target="_blank" rel="noopener">ダウンロード（PDF）</a></li>
+      </ul>
+    </section>
+
+    <!-- 連絡先 -->
+    <section class="card" aria-label="連絡先">
+      <h2>連絡先</h2>
+      <ul class="list">
+        <li>研究室サイト：<a id="link-lab" href="#" target="_blank" rel="noopener">（研究室URLを設定）</a></li>
+        <li>学部サイト：<a id="link-fac" href="#" target="_blank" rel="noopener">（学部公式サイトURLを設定）</a></li>
+      </ul>
+    </section>
+
+    <footer>© 2025 — OC Voice × Place Hub</footer>
+  </main>
+
+  <script>
+    // ====== 設定（必要に応じて書き換え） ==========================
+    const BASE_UTM_DEFAULT = {
+      utm_source: 'hub',
+      utm_medium: 'web',
+      utm_campaign: 'oc2025'
+    };
+    const LINKS = {
+      hf:  'https://huggingface.co/spaces/ayaka68/voice2place',
+      gh:  'https://aonoa68.github.io/oc-voice-demo/',
+      docs:'https://aonoa68.github.io/oc-voice-demo/docs/'
+           // ↑ 研究資料のURLに差し替えてください（Notion/SlidesでもOK）
+    };
+    const PDF_LINK = 'assets/docs/faculty_guide.pdf'; // 学科紹介PDF（置き場所に合わせて変更）
+    const LAB_URL  = 'https://example.com/lab';       // 研究室
+    const FAC_URL  = 'https://example.com/faculty';   // 学部
+
+    // ====== 既存のUTMを保持しつつ utm_content を追加するユーティリティ ======
+    function buildTrackedUrl(base, content) {
+      const url = new URL(base);
+      // クエリが既にある場合を想定して一旦退避
+      const incoming = new URLSearchParams(window.location.search);
+      const params = new URLSearchParams(url.search);
+
+      // 既存（タグからの）UTMを最優先で維持
+      for (const [k, v] of incoming.entries()) {
+        if (k.startsWith('utm_')) params.set(k, v);
+      }
+      // なければデフォルトUTM
+      for (const [k, v] of Object.entries(BASE_UTM_DEFAULT)) {
+        if (!params.has(k)) params.set(k, v);
+      }
+      // クリック元（ボタン）を明示
+      params.set('utm_content', content);
+
+      url.search = params.toString();
+      return url.toString();
+    }
+
+    // ====== ボタンにURLを設定 ======
+    document.getElementById('btn-hf').href   = buildTrackedUrl(LINKS.hf,   'hf');
+    document.getElementById('btn-gh').href   = buildTrackedUrl(LINKS.gh,   'gh');
+    document.getElementById('btn-docs').href = buildTrackedUrl(LINKS.docs, 'slides');
+
+    // 補助リンク
+    const aPdf = document.getElementById('link-pdf');
+    if (aPdf) aPdf.href = PDF_LINK;
+    const aLab = document.getElementById('link-lab');
+    if (aLab) aLab.href = LAB_URL;
+    const aFac = document.getElementById('link-fac');
+    if (aFac) aFac.href = FAC_URL;
+  </script>
+</body>
+</html>
