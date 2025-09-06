@@ -127,35 +127,33 @@
       utm_campaign: 'oc2025'
     };
     const LINKS = {
-      hf:  'https://huggingface.co/spaces/ayaka68/voice2place',
-      gh:  'https://aonoa68.github.io/oc-voice-demo/',
-      pdf: '<a href="./EHBES-J_2024.pdf" target="_blank" rel="noopener">研究資料PDF</a>'
-           // ↑ 研究資料のURLに差し替えてください（Notion/SlidesでもOK）
+    hf:  'https://huggingface.co/spaces/ayaka68/voice2place',
+    gh:  'https://aonoa68.github.io/oc-voice-demo/',
+    docs:'./EHBES-J_2024.pdf'
     };
-    // const LAB_URL  = 'https://example.com/lab';       // 研究室
-    const FAC_URL  = 'https://www.hokusei.ac.jp/informatics/';   // 学部
+    const LAB_URL = ''; // 例: 'https://example.com/lab'
+    const FAC_URL = 'https://www.hokusei.ac.jp/informatics/';
+    new URL(base, location.href)
 
     // ====== 既存のUTMを保持しつつ utm_content を追加するユーティリティ ======
     function buildTrackedUrl(base, content) {
-      const url = new URL(base);
-      // クエリが既にある場合を想定して一旦退避
-      const incoming = new URLSearchParams(window.location.search);
-      const params = new URLSearchParams(url.search);
+  const url = new URL(base, location.href);  // ← 相対/絶対どちらでもOK
+  const incoming = new URLSearchParams(location.search);
+  const params = new URLSearchParams(url.search);
 
-      // 既存（タグからの）UTMを最優先で維持
-      for (const [k, v] of incoming.entries()) {
-        if (k.startsWith('utm_')) params.set(k, v);
-      }
-      // なければデフォルトUTM
-      for (const [k, v] of Object.entries(BASE_UTM_DEFAULT)) {
-        if (!params.has(k)) params.set(k, v);
-      }
-      // クリック元（ボタン）を明示
-      params.set('utm_content', content);
+  // タグから来たUTMを優先
+  for (const [k, v] of incoming.entries()) {
+    if (k.startsWith('utm_')) params.set(k, v);
+  }
+  // デフォルトUTM（足りないものだけ）
+  if (!params.has('utm_source'))   params.set('utm_source', 'hub');
+  if (!params.has('utm_medium'))   params.set('utm_medium', 'web');
+  if (!params.has('utm_campaign')) params.set('utm_campaign', 'oc2025');
 
-      url.search = params.toString();
-      return url.toString();
-    }
+  params.set('utm_content', content);
+  url.search = params.toString();
+  return url.toString();
+}
 
     // ====== ボタンにURLを設定 ======
     document.getElementById('btn-hf').href   = buildTrackedUrl(LINKS.hf,   'hf');
