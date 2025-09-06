@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>会話劇｜声のパターンで気分を推測してみよう</title>
+
+<!-- ↓ ここだけ差し替えてください（ファイル名 or 絶対URL） -->
+<link rel="preload" as="image" href="student_icon.png">
+<link rel="preload" as="image" href="teacher_icon.png">
+
+<style>
+  :root{
+    --bg:#f6f7fb; --ink:#1b1f23; --soft:#ffffff;
+    --teacher:#0b7285; --student:#5c3dc4;
+    --bubble-teacher:#e6f4f6; --bubble-student:#efeaff;
+    --muted:#6b7280;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0e1116; --ink:#e5e7eb; --soft:#151923;
+      --bubble-teacher:#0f2a31; --bubble-student:#1f1a33; --muted:#9aa2b1;
+    }
+  }
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,'Noto Sans JP',sans-serif;line-height:1.6}
+  .wrap{max-width:940px;margin:auto;padding:28px 18px}
+  h1{font-size:clamp(1.4rem,3.2vw,2.2rem);margin:.2em 0 .6em}
+  .sub{color:var(--muted);margin:-.2em 0 1.2em}
+
+  .chat{display:flex;flex-direction:column;gap:14px}
+  .msg{display:flex;gap:10px;align-items:flex-end}
+  .msg.teacher{justify-content:flex-start}
+  .msg.student{justify-content:flex-end}
+
+  /* ====== アイコンを画像で表示 ====== */
+  .avatar{
+    flex:0 0 44px;width:44px;height:44px;border-radius:999px;overflow:hidden;
+    display:grid;place-items:center;background:#ddd; /* 画像が無い時の背面色 */
+    box-shadow:0 1px 0 rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06)
+  }
+  .avatar img{
+    width:100%;height:100%;object-fit:cover;display:block
+  }
+  .avatar.teacher{background:var(--teacher)}
+  .avatar.student{background:var(--student)}
+
+  .who{font-size:.78rem;color:var(--muted);margin:0 6px}
+  .bubble{
+    position:relative;max-width:min(720px,75vw);padding:12px 14px;border-radius:14px;
+    background:var(--soft);box-shadow:0 1px 0 rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06)
+  }
+  .teacher .bubble{background:var(--bubble-teacher);border:1px solid rgba(11,114,133,.18)}
+  .student .bubble{background:var(--bubble-student);border:1px solid rgba(92,61,196,.18)}
+  .teacher .bubble::after, .student .bubble::after{
+    content:"";position:absolute;bottom:-8px;width:14px;height:14px;transform:rotate(45deg);background:inherit
+  }
+  .teacher .bubble::after{left:18px}
+  .student .bubble::after{right:18px}
+  .bubble h3{margin:.2em 0 .4em;font-size:1rem}
+  .bubble ul{margin:.4em 0 .2em 1.2em;padding:0}
+  .bubble li{margin:.14em 0}
+  .hint{font-size:.86rem;color:var(--muted)}
+  .footer{margin-top:22px;padding:14px;border-radius:12px;background:var(--soft);border:1px dashed rgba(0,0,0,.12)}
+
+  @media print{ body{background:#fff} .wrap{padding:0} .bubble{box-shadow:none} }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>会話劇｜声のパターンで気分を推測してみよう</h1>
+    <p class="sub">先生と生徒のやり取りで、体験コーナーの仕組みをやさしく説明します（読み上げ8〜10分）。</p>
+
+    <section class="chat" aria-label="先生と生徒の会話">
+      <!-- シーン1 -->
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">「今日はとても楽しみです！」（録音）</div>
+        <div class="avatar student" aria-hidden="true"><img src="student_icon.png" alt="女子生徒アイコン"></div>
+      </div>
+
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true"><img src="teacher_icon.png" alt="女性の先生アイコン"></div>
+        <div class="bubble">ありがとう。……出ました。グラフでは<strong>「喜び」</strong>が一番高いね。</div>
+        <div class="who">先生</div>
+      </div>
+
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">どうやって判断してるんですか？ 心を読んでるわけじゃないですよね？</div>
+        <div class="avatar student" aria-hidden="true"><img src="student_icon.png" alt="女子生徒アイコン"></div>
+      </div>
+
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true"><img src="teacher_icon.png" alt="女性の先生アイコン"></div>
+        <div class="bubble">心は読んでいないよ。見ているのは<strong>声の出し方のパターン</strong>。たとえば＜高さ・強さ・ゆれ・速さ＞だ。</div>
+        <div class="who">先生</div>
+      </div>
+
+      <!-- 以降はセリフ部分のみ / アイコンは同じ記述でOK -->
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true"><img src="teacher_icon.png" alt="女性の先生アイコン"></div>
+        <div class="bubble">
+          <h3>まずは全体の流れ</h3>
+          <ul>
+            <li><strong>サンプリング</strong>＝録音のコマ撮り。1秒を<strong>1.6万コマ</strong>で数字に。</li>
+            <li><strong>フレーム</strong>＝約0.02秒の小分けにする。</li>
+            <li><strong>特徴づくり</strong>＝フレームごとに「高い？強い？ゆれてる？」の<strong>ヒント点数</strong>を作る。</li>
+            <li><strong>まとめ</strong>＝有効な部分だけ<strong>平均</strong>して1枚の成績表に。</li>
+            <li><strong>仕分け</strong>＝成績表を見て<strong>4つの気分の割合</strong>（確率）を出す。</li>
+          </ul>
+          <p class="hint">※難しい数式は不要。「声の写真（数字）→ 仕分け係」のイメージでOK。</p>
+        </div>
+        <div class="who">先生</div>
+      </div>
+
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">用語が多くて少し不安…。やさしく言い換えると？</div>
+        <div class="avatar student" aria-hidden="true"><img src="student_icon.png" alt="女子生徒アイコン"></div>
+      </div>
+
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true"><img src="teacher_icon.png" alt="女性の先生アイコン"></div>
+        <div class="bubble">
+          いいね。<br>
+          <strong>サンプリング</strong>＝声のコマ撮り／<strong>フレーム</strong>＝小分けの切れ目／
+          <strong>特徴</strong>＝ヒント点数／<strong>まとめ</strong>＝平均で1枚に／
+          <strong>仕分け</strong>＝4つの箱に入れる係だよ。
+        </div>
+        <div class="who">先生</div>
+      </div>
+
+      <!-- …（中略：前回と同じセリフを続けてOK。以下の2つのmsgを繰り返し） … -->
+
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">つまり、AIは<strong>心</strong>ではなく<strong>声のパターン</strong>を見て、4つの<strong>割合</strong>を返してくれる――ですね。</div>
+        <div class="avatar student" aria-hidden="true"><img src="student_icon.png" alt="女子生徒アイコン"></div>
+      </div>
+
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true"><img src="teacher_icon.png" alt="女性の先生アイコン"></div>
+        <div class="bubble">その通り。だから<strong>試して・比べて・理由を考える</strong>のが学び。録音は<strong>保存しない</strong>、診断ではない――ここも大切だよ。</div>
+        <div class="who">先生</div>
+      </div>
+    </section>
+
+    <section class="footer" aria-label="用語ミニ辞典">
+      <strong>用語ミニ辞典</strong><br />
+      サンプリング＝コマ撮り／フレーム＝小分けの切れ目／特徴＝声のヒント点数／ベクトル＝点数が縦にならんだ表／
+      仕分け（分類器）＝4つの箱の割合を出す係／確率＝自信メーター（合計100%）／HuBERT＝特徴づくりの職人AI
+    </section>
+  </main>
+</body>
+</html>
