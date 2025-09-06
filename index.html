@@ -130,17 +130,172 @@
         <div class="who">先生</div>
       </div>
 
-      <!-- …（中略：前回と同じセリフを続けてOK。以下の2つのmsgを繰り返し） … -->
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">
+          その「成績表」って、数学の<strong>ベクトル</strong>ですか？
+        </div>
+        <div class="avatar student" aria-hidden="true">生</div>
+      </div>
+
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true">先</div>
+        <div class="bubble">
+          そう。今日は「<strong>点数が縦にならんだ表</strong>」だと考えればOK。
+        </div>
+        <div class="who">先生</div>
+      </div>
+
+      <!-- シーン3：中身少し -->
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true">先</div>
+        <div class="bubble">
+          <h3>中身をちょっとだけ</h3>
+          <ul>
+            <li><strong>HuBERT</strong>というAIがフレームから<strong>768個</strong>の点数（声の指紋）を作る職人。</li>
+            <li>無音に近い所は除き、点数を<strong>平均</strong>して1人1枚の成績表に。</li>
+            <li>仕分け係が<strong>喜び/怒り/悲しみ/中立</strong>の<strong>確率（自信メーター）</strong>を返す。</li>
+          </ul>
+        </div>
+        <div class="who">先生</div>
+      </div>
 
       <div class="msg student">
         <div class="who">生徒</div>
-        <div class="bubble">つまり、AIは<strong>心</strong>ではなく<strong>声のパターン</strong>を見て、4つの<strong>割合</strong>を返してくれる――ですね。</div>
+        <div class="bubble">
+          確率＝自信メーター、合計100%ということですね。
+        </div>
+        <div class="avatar student" aria-hidden="true">生</div>
+      </div>
+
+      <!-- シーン4：誤解しやすい点 -->
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">
+          文章の<strong>意味</strong>は見ていない？
+        </div>
+        <div class="avatar student" aria-hidden="true">生</div>
+      </div>
+
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true">先</div>
+        <div class="bubble">
+          この体験では<strong>見ていない</strong>。同じ「嬉しいです」でも、<strong>小さく低い声</strong>なら“悲しみ”に寄ることがある。<br>
+          見ているのは<strong>内容でなく出し方</strong>だよ。
+        </div>
+        <div class="who">先生</div>
+      </div>
+
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">
+          外れることもありますよね？
+        </div>
+        <div class="avatar student" aria-hidden="true">生</div>
+      </div>
+
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true">先</div>
+        <div class="bubble">
+          もちろん。主な理由は3つ：<br>
+          <ol>
+            <li><strong>録音環境</strong>（雑音・マイク距離）</li>
+            <li><strong>個人差</strong>（学習データに少ない話し方）</li>
+            <li><strong>データの偏り</strong>（年齢・性別・方言など）</li>
+          </ol>
+          だから<strong>診断ではない</strong>、<strong>保存もしない</strong>運用にしているよ。
+        </div>
+        <div class="who">先生</div>
+      </div>
+
+      <!-- シーン5：ミニ実験 -->
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true">先</div>
+        <div class="bubble">
+          同じ文を<strong>普通／嬉しい／怒り／悲しい</strong>で読んでみよう。次に、<strong>マイク距離</strong>と<strong>声の大きさ</strong>も変えてみる。
+        </div>
+        <div class="who">先生</div>
+      </div>
+
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">
+          （実演）たしかに、<strong>高さ</strong>を上げると喜び、<strong>強さ・速さ</strong>を上げると怒りに寄りやすいですね。
+        </div>
+        <div class="avatar student" aria-hidden="true">生</div>
+      </div>
+
+      <!-- シーン6：評価 -->
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">
+          研究では、うまくいっているかどう確かめるんですか？
+        </div>
+        <div class="avatar student" aria-hidden="true">生</div>
+      </div>
+
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true">先</div>
+        <div class="bubble">
+          <strong>混同行列</strong>という表で、たとえば“喜び”を“中立”と取り違えた回数がわかる。<br>
+          さらに<strong>精度・再現率・F1</strong>でバランスも見るよ。
+        </div>
+        <div class="who">先生</div>
+      </div>
+
+      <!-- シーン7：発展 -->
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">
+          4つの気分だけですか？
+        </div>
+        <div class="avatar student" aria-hidden="true">生</div>
+      </div>
+
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true">先</div>
+        <div class="bubble">
+          体験版は日本語のJTESに合わせて<strong>4クラス</strong>。心理学の<strong>Plutchikの8感情</strong>（喜び・信頼・恐れ・驚き・悲しみ・嫌悪・怒り・期待）にも拡張できる。<br>
+          方法は、<strong>音声→文字（ASR）→8感情の文字モデル</strong>か、<strong>8感情でラベル済み音声</strong>で学習し直す、の2通りが現実的。
+        </div>
+        <div class="who">先生</div>
+      </div>
+
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">
+          社会ではどこに役立ちますか？
+        </div>
+        <div class="avatar student" aria-hidden="true">生</div>
+      </div>
+
+      <div class="msg teacher">
+        <div class="avatar teacher" aria-hidden="true">先</div>
+        <div class="bubble">
+          例を挙げるね。<br>
+          ・対話システム：怒り気味なら<strong>穏やかな返答</strong>に切替。<br>
+          ・教育：音読の<strong>抑揚フィードバック</strong>。<br>
+          ・メディア：声の雰囲気に合わせて<strong>演出変更</strong>。<br>
+          ・本学の研究：<strong>「場所×感情」</strong>を結び、心地よい空間設計や回遊デザインに活かす。
+        </div>
+        <div class="who">先生</div>
+      </div>
+
+      <!-- シーン8：まとめ -->
+      <div class="msg student">
+        <div class="who">生徒</div>
+        <div class="bubble">
+          つまり、AIは<strong>心</strong>ではなく<strong>声のパターン</strong>を見て、4つの気分の<strong>割合</strong>を返してくれる――ですね。
+        </div>
         <div class="avatar student" aria-hidden="true"><img src="assets/img/student_icon.png" alt="女子生徒アイコン"></div>
       </div>
 
       <div class="msg teacher">
         <div class="avatar teacher" aria-hidden="true"><img src="assets/img/teacher_icon.png" alt="女性の先生アイコン"></div>
-        <div class="bubble">その通り。だから<strong>試して・比べて・理由を考える</strong>のが学び。録音は<strong>保存しない</strong>、診断ではない――ここも大切だよ。</div>
+        <div class="bubble">
+          その通り。だから<strong>試して・比べて・理由を考える</strong>のが学び。<br>
+          体験は診断ではないし、録音は<strong>保存しない</strong>。ここも大切だよ。
+        </div>
         <div class="who">先生</div>
       </div>
     </section>
