@@ -118,55 +118,59 @@
 
     <footer>© 2025 — OC Voice × Place Hub</footer>
   </main>
-
-  <script>
-    // ====== 設定（必要に応じて書き換え） ==========================
-    const BASE_UTM_DEFAULT = {
-      utm_source: 'hub',
-      utm_medium: 'web',
-      utm_campaign: 'oc2025'
-    };
-    const LINKS = {
+<script>
+  // ====== 設定（必要に応じて書き換え） ==========================
+  const BASE_UTM_DEFAULT = {
+    utm_source: 'hub',
+    utm_medium: 'web',
+    utm_campaign: 'oc2025'
+  };
+  const LINKS = {
     hf:  'https://huggingface.co/spaces/ayaka68/voice2place',
     gh:  'https://aonoa68.github.io/oc-voice-demo/',
-    docs:'./EHBES-J_2024.pdf'
-    };
-    const LAB_URL = ''; // 例: 'https://example.com/lab'
-    const FAC_URL = 'https://www.hokusei.ac.jp/informatics/';
-    new URL(base, location.href)
+    docs:'./EHBES-J_2024.pdf'             // ← hub と同じフォルダにPDFがある前提
+  };
+  const LAB_URL = '';                      // 例: 'https://example.com/lab'
+  const FAC_URL = 'https://www.hokusei.ac.jp/informatics/';
+  const PDF_LINK = LINKS.docs;             // ← 追加：下の aPdf に渡す実体
 
-    // ====== 既存のUTMを保持しつつ utm_content を追加するユーティリティ ======
-    function buildTrackedUrl(base, content) {
-  const url = new URL(base, location.href);  // ← 相対/絶対どちらでもOK
-  const incoming = new URLSearchParams(location.search);
-  const params = new URLSearchParams(url.search);
+  // ====== 既存のUTMを保持しつつ utm_content を追加するユーティリティ ======
+  function buildTrackedUrl(base, content) {
+    const url = new URL(base, location.href);  // 相対/絶対どちらでもOK
+    const incoming = new URLSearchParams(location.search);
+    const params = new URLSearchParams(url.search);
 
-  // タグから来たUTMを優先
-  for (const [k, v] of incoming.entries()) {
-    if (k.startsWith('utm_')) params.set(k, v);
+    // タグから来たUTMを優先
+    for (const [k, v] of incoming.entries()) {
+      if (k.startsWith('utm_')) params.set(k, v);
+    }
+    // デフォルトUTM（足りないものだけ）
+    if (!params.has('utm_source'))   params.set('utm_source', 'hub');
+    if (!params.has('utm_medium'))   params.set('utm_medium', 'web');
+    if (!params.has('utm_campaign')) params.set('utm_campaign', 'oc2025');
+
+    params.set('utm_content', content);
+    url.search = params.toString();
+    return url.toString();
   }
-  // デフォルトUTM（足りないものだけ）
-  if (!params.has('utm_source'))   params.set('utm_source', 'hub');
-  if (!params.has('utm_medium'))   params.set('utm_medium', 'web');
-  if (!params.has('utm_campaign')) params.set('utm_campaign', 'oc2025');
 
-  params.set('utm_content', content);
-  url.search = params.toString();
-  return url.toString();
-}
+  // ====== ボタンにURLを設定 ======
+  document.getElementById('btn-hf').href   = buildTrackedUrl(LINKS.hf,   'hf');
+  document.getElementById('btn-gh').href   = buildTrackedUrl(LINKS.gh,   'gh');
+  document.getElementById('btn-docs').href = buildTrackedUrl(LINKS.docs, 'pdf');
 
-    // ====== ボタンにURLを設定 ======
-    document.getElementById('btn-hf').href   = buildTrackedUrl(LINKS.hf,   'hf');
-    document.getElementById('btn-gh').href   = buildTrackedUrl(LINKS.gh,   'gh');
-    document.getElementById('btn-docs').href = buildTrackedUrl(LINKS.docs, 'slides');
+  // 補助リンク（ページに要素があるときだけ設定）
+  const aPdf = document.getElementById('link-pdf');
+  if (aPdf) aPdf.href = PDF_LINK;
 
-    // 補助リンク
-    const aPdf = document.getElementById('link-pdf');
-    if (aPdf) aPdf.href = PDF_LINK;
-    const aLab = document.getElementById('link-lab');
-    if (aLab) aLab.href = LAB_URL;
-    const aFac = document.getElementById('link-fac');
-    if (aFac) aFac.href = FAC_URL;
-  </script>
+  const aLab = document.getElementById('link-lab');
+  if (aLab) {
+    if (LAB_URL) aLab.href = LAB_URL;
+    else aLab.closest('li').style.display = 'none'; // 研究室URL未設定なら項目ごと隠す
+  }
+
+  const aFac = document.getElementById('link-fac');
+  if (aFac && FAC_URL) aFac.href = FAC_URL;
+</script>
 </body>
 </html>
