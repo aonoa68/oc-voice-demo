@@ -229,7 +229,7 @@
     let hue = 50*joy + 0*neu + 200*sad + 0*anger; // base contributions
     if(anger>0.35) hue = 0; // push to red when anger noticeable
     if(joy>sad && joy>anger) hue = lerp(48, 28, anger); // joy→yellow/orange when anger mixes
-    if(neu>0.6) hue = 120; // greenish neutral
+    if(neu>0.6) hue = 80; // greenish neutral
 
     const arousal = Math.max(joy, anger) * 0.6 + (1 - sad) * 0.2;
     const conf = Math.max(joy, anger, sad, neu);
@@ -245,7 +245,7 @@
 
     // geometry controls
     const arousal = clamp( (joy+anger) - 0.3*sad, 0, 1);
-    const petals = Math.round( lerp(6, 24, arousal) );
+    const petals = Math.round( lerp(12, 28, arousal) ); 
     const spikiness = clamp( anger*0.9, 0, 0.95 );
     const droop = clamp( sad*0.55, 0, 0.7 );
 
@@ -299,8 +299,12 @@
     for(let i=0;i<petals;i++){
       const ang = (360/petals) * i;
       const jitter = (Math.random()-0.5) * spikiness*8; // anger adds randomness
-      svg += `<path d="${petalPath(ang+jitter)}" fill="url(#petalShade)" opacity="${lerp(0.6, 0.95, 1 - spikiness*0.5)}"/>`;
-    }
+      svg += `<path d="${petalPath(ang+jitter)}" 
+             fill="url(#petalShade)" 
+             stroke="white" 
+             stroke-width="1.2"
+             opacity="${lerp(0.6, 0.95, 1 - spikiness*0.5)}"/>`;
+      }
 
     // core
     svg += `<circle cx="${cx}" cy="${cy+ (droop*12)}" r="${lerp(20, 45, Math.max(joy,neu))}" fill="url(#core)" stroke="${hsl(hue, sat*0.6, light*0.8)}" stroke-width="3" />`;
