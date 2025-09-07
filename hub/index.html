@@ -132,6 +132,7 @@
     hf:  'https://huggingface.co/spaces/ayaka68/voice2place',
     gh:  'https://aonoa68.github.io/oc-voice-demo/',
     docs:'./EHBES-J_2024.pdf'             // ← hub と同じフォルダにPDFがある前提
+    flower:'./flower/'
   };
   const LAB_URL = '';                      // 例: 'https://example.com/lab'
   const FAC_URL = 'https://www.hokusei.ac.jp/informatics/';
@@ -161,6 +162,7 @@
   document.getElementById('btn-hf').href   = buildTrackedUrl(LINKS.hf,   'hf');
   document.getElementById('btn-gh').href   = buildTrackedUrl(LINKS.gh,   'gh');
   document.getElementById('btn-docs').href = buildTrackedUrl(LINKS.docs, 'pdf');
+  document.getElementById('btn-flower').href = buildTrackedUrl(LINKS.flower, 'flower');
 
   // 補助リンク（ページに要素があるときだけ設定）
   const aPdf = document.getElementById('link-pdf');
